@@ -1,64 +1,61 @@
+-- Day 3 
 
--- DAY 2 
+-- Joins  used to combine rows from two or more tables based on related columns.
+
+select*
+from transfers
+;
+CREATE TABLE transfers(
+payment_id int ,
+amount varchar(50),
+customer_id varchar (50)
+
+)
+;
+insert into transfers
+value (100,2.56,02) ,
+	  (101,23.6,3),
+      (102,3.65,3),
+      (103,6.95,4),
+	  (104,9.99,5),
+      (105,1.65,NULL)
+;
+insert into transfers
+value (NULL,NULL,Null) ;
+
+select*
+from CUSTOMERS;
 
 
-
--- UNIQUE is to make a data unique DOES NOT ALLOW DUPLICATE
--- PRIMARY KEY a table can have oneprimary key and UNIQUE and NOT NULL 
--- AUTO_INCREMENT automatically adds a unique, increasing number.Used for columns like id in most cases. No need to manually give a value for it while inserting.
--- FOREIGN KEY is a constraint that links two tables together . It ensures that the value in one column (or set of columns) matches the value in a column of another table
-
-create table products (
-	 product_id int,
-     product_name varchar(100) unique ,
-     price decimal (5,2)
-);
+insert into customers
+value (NULL,"Poppy","Puff") ;
 
 
-insert into products
-value (01, "Computer",36.8),
-	  (02, "Phone" ,15.7),
-	  (03,"Camera",65.9),
-	  (04,"Mousepad",50),
-	  (05, "Headphone",22.6 )
-      ;
+-- INNER JOIN  // We are telling MySQL to select what these 2 table have in commun (Shows only matching rows in both tables)
 
-
-alter table products
-auto_increment = 100
+select payment_id,amount, fisrt_name,last_name
+from transfers inner join customers  -- the 2 tables will be join together the 2nd will be in the left means THE CUSTOMERS TABLE
+on transfers.customer_id = customers.customer_id  -- customer_id column şs what they have in commun 
 
 ;
-select *
-from products
-;
-
-
-create table customers (
-	 customer_id int primary key auto_increment,
-     fisrt_name  varchar(100) ,
-     last_name varchar(100)
-);
-
-insert into customers (fisrt_name, last_name)
-value 
-        ("Ben","Ayed"),
-       ("Mark","Dot"),
-       ("Mos","hıs")
-;
-select *
-from customers
-;
-
-create table transactions (
-	transactions_id int primary key auto_increment,
-     amount decimal(5,2)  ,
-     customer_id int ,
-     foreign key(customer_id) references customers(customer_id)
-);
+-- LEFT JOIN  // 
 
 select *
-from transactions
+from transfers left join customers  -- To dispaly everything on the left table also display any
+on transfers.customer_id = customers.customer_id  
 ;
+-- UNION 
+select *
+from transfers right join customers  -- To dispaly everything on the right table also display any
+on transfers.customer_id = customers.customer_id  ;
 
 
+select *
+from transfers left join customers  -- To dispaly everything on the right table also display any
+on transfers.customer_id = customers.customer_id  
 
+union
+
+select *
+from transfers right join customers  -- To dispaly everything on the right table also display any
+on transfers.customer_id = customers.customer_id  ;
